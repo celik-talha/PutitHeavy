@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    float mouseSens = 5f;
+    float mouseSens;
     public GameObject Player;
 
     public bool camIsLive = true;
