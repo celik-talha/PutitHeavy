@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameScript : MonoBehaviour
 {
     public float currTime = 0f;
-    float startingTime = 10f;
+    float startingTime = 15f;
     
     public GameObject clockObject;
     TextMeshProUGUI clockMesh;
@@ -26,12 +27,16 @@ public class GameScript : MonoBehaviour
     public PutBlock putScript;
     public CameraMovement camScript;
     public PlayerMovement playerScript;
+    public EnemyPoint aiPointScript;
 
-    int round = 1;
-    int playerEndScore;
-    int enemyEndScore;
-    int playerMatchScore = 0;
-    int enemyMatchScore = 0;
+    public int round = 1;
+    public int playerEndScore;
+    public int enemyEndScore;
+    public int playerMatchScore = 0;
+    public int enemyMatchScore = 0;
+
+    float roundTime = 15f;
+    float roundEndTime = 2f;
 
     void Start()
     {
@@ -68,6 +73,8 @@ public class GameScript : MonoBehaviour
 
         roundTextMesh.text = "Round " + round;
 
+        enemyEndScore = aiPointScript.getEnemyPoint(round, playerMatchScore, enemyMatchScore);
+
         playerEndScore = putScript.score;
         playerPointsMesh.text = playerEndScore.ToString();
         enemyPointsMesh.text = enemyEndScore.ToString();
@@ -89,8 +96,16 @@ public class GameScript : MonoBehaviour
         enemyMatchScoreTextMesh.text = enemyMatchScore.ToString();
 
         clearWeigher();
-        StartCoroutine(restartRound());
-        currTime = 10f;
+        if (playerMatchScore > 4 || enemyMatchScore > 4)
+        {
+            StartCoroutine(finishGame());
+            currTime = 50f;
+        }
+        else
+        {
+            StartCoroutine(restartRound());
+            currTime = roundTime;
+        }
     }
 
     void clearWeigher()
@@ -124,7 +139,7 @@ public class GameScript : MonoBehaviour
 
     public IEnumerator restartRound()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(roundEndTime);
         playerScript.playerIslive = true;
         camScript.camIsLive = true;
         putScript.putIsLive = true;
@@ -133,6 +148,16 @@ public class GameScript : MonoBehaviour
         panel.SetActive(false);
 
         round++;
-        currTime = 10f;
+        currTime = roundTime;
+    }
+
+    public IEnumerator finishGame()
+    {
+        yield return new WaitForSeconds(roundEndTime);
+
+        PlayerPrefs.SetInt("PLAYER", playerMatchScore);
+        PlayerPrefs.SetInt("ENEMY", enemyMatchScore);
+
+        SceneManager.LoadScene("FinishScene");
     }
 }

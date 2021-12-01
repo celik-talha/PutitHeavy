@@ -77,39 +77,72 @@ public class PutBlock : MonoBehaviour
                     if (order == 1)
                     {
                         line1Count++;
-                        for (int i = 0; i < line1Count; i++)
+                        foreach (var go in line1)
                         {
-                            line1[i].SetActive(true);
+                            if (t==0)
+                            {
+                                if (go.activeSelf==false)
+                                {
+                                    go.SetActive(true);
+                                    t = 1;
+                                }
+                            }
                         }
                     }
+
                     else if (order == 2)
                     {
                         line2Count++;
-                        for (int i = 0; i < line2Count; i++)
+                        foreach (var go in line2)
                         {
-                            line2[i].SetActive(true);
+                            if (t == 0)
+                            {
+                                if (go.activeSelf == false)
+                                {
+                                    go.SetActive(true);
+                                    t = 1;
+                                }
+                            }
                         }
                     }
+
                     else if (order == 3)
                     {
                         line3Count++;
-                        for (int i = 0; i < line3Count; i++)
+                        foreach (var go in line3)
                         {
-                            line3[i].SetActive(true);
+                            if (t == 0)
+                            {
+                                if (go.activeSelf == false)
+                                {
+                                    go.SetActive(true);
+                                    t = 1;
+                                }
+                            }
                         }
                     }
+                     
                     else if (order == 4)
                     {
                         line4Count++;
-                        for (int i = 0; i < line4Count; i++)
+                        foreach (var go in line4)
                         {
-                            line4[i].SetActive(true);
+                            if (t == 0)
+                            {
+                                if (go.activeSelf == false)
+                                {
+                                    go.SetActive(true);
+                                    t = 1;
+                                }
+                            }
                         }
                     }
                     else
                     {
                         Debug.Log("Error! order");
                     }
+
+                    t = 0;
                 }
 
                 if (place == 1)
