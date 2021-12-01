@@ -1221,6 +1221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPointGo: {fileID: 1842483501}
   enemyPointGo: {fileID: 890077346}
+  resultsGo: {fileID: 941343925}
 --- !u!4 &1284007205
 Transform:
   m_ObjectHideFlags: 0

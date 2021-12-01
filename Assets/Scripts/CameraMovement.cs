@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    float mouseSens = 6f;
+    float mouseSens = 5f;
     public GameObject Player;
 
     public bool camIsLive = true;
@@ -13,6 +13,7 @@ public class CameraMovement : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        mouseSens = PlayerPrefs.GetFloat("MOUSESENS",5f);
     }
 
     void FixedUpdate()
