@@ -19,6 +19,7 @@ public class SliderScript : MonoBehaviour
             sensTextMesh.text = v.ToString("0.00");
             sens = v;
             PlayerPrefs.SetFloat("MOUSESENS", sens);
+            Debug.Log(sens);
         });
     }
 }

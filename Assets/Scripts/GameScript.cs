@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 public class GameScript : MonoBehaviour
 {
     public float currTime = 0f;
-    float startingTime = 15f;
+    float startingTime = 45f;
     
     public GameObject clockObject;
     TextMeshProUGUI clockMesh;
+
+    public GameObject joystick;
 
     public GameObject panel;
     public GameObject roundText;
@@ -38,6 +40,8 @@ public class GameScript : MonoBehaviour
     float roundTime = 15f;
     float roundEndTime = 2f;
 
+    bool isMobile;
+
     void Start()
     {
         clockMesh = clockObject.GetComponent<TextMeshProUGUI>();
@@ -48,6 +52,14 @@ public class GameScript : MonoBehaviour
         enemyMatchScoreTextMesh = enemyMatchScoreText.GetComponent<TextMeshProUGUI>();
 
         currTime = startingTime;
+        camScript.checkPlatform();
+        isMobile = camScript.isMobile;
+
+        if (!isMobile)
+        {
+            joystick.SetActive(false);
+        }
+
     }
 
     void FixedUpdate()
@@ -62,11 +74,17 @@ public class GameScript : MonoBehaviour
             endRound();
         }
     }
+
     void endRound()
     {
         playerScript.playerIslive = false;
         camScript.camIsLive = false;
         putScript.putIsLive = false;
+
+        if (isMobile)
+        {
+            joystick.SetActive(false);
+        }
 
         clockObject.SetActive(false);
         panel.SetActive(true);
@@ -114,6 +132,7 @@ public class GameScript : MonoBehaviour
         GameObject[] clear2 = putScript.line2;
         GameObject[] clear3 = putScript.line3;
         GameObject[] clear4 = putScript.line4;
+
         foreach (var ob in clear1)
         {
             ob.SetActive(false);
@@ -130,6 +149,7 @@ public class GameScript : MonoBehaviour
         {
             ob.SetActive(false);
         }
+
         putScript.score = 0;
         putScript.line1Count = 0;
         putScript.line2Count = 0;
@@ -143,6 +163,11 @@ public class GameScript : MonoBehaviour
         playerScript.playerIslive = true;
         camScript.camIsLive = true;
         putScript.putIsLive = true;
+
+        if (isMobile)
+        {
+            joystick.SetActive(true);
+        }
 
         clockObject.SetActive(true);
         panel.SetActive(false);
